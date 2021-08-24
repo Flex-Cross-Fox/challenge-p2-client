@@ -1,0 +1,13 @@
+#addMovieForm {
+    background-color: bisque;
+    text-align: center;
+    font-size: x-large;
+}
+
+.eachAddMovieInput{
+    margin: 5px;    
+}
+
+.addMovieSubmit button{
+    font-size: xx-large;
+}
