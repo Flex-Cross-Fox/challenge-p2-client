@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="assets/vendors/simple-datatables/style.css">
 
     <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <!-- <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css"> -->
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="stylesheet" href="stylesheet.css">
 </head>
@@ -36,28 +36,34 @@
                   <ul class="menu">
                       <li class="sidebar-title">Menu</li>
 
-                      <li class="sidebar-item active " id="">
-                          <a href="table.html" class='sidebar-link'>
+                      <li class="sidebar-item active " id="navLogin">
+                          <a href="#" class='sidebar-link'>
                               <i class="bi bi-grid-fill"></i>
-                              <span>Home</span>
+                              <span>Login</span>
                           </a>
-                      </li>
-                      <li class="sidebar-item active " id="">
-                          <a href="table.html" class='sidebar-link'>
+                        
+                    </li>
+                    <li class="sidebar-item active " id="navHome">
+                            <a href="#" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Home</span></a>
+                    </li>
+                      <li class="sidebar-item active " id="navAddMovie">
+                          <a href="#" class='sidebar-link'>
                               <i class="bi bi-grid-fill"></i>
                               <span>Add Movie</span>
                           </a>
                       </li>
-                      <li class="sidebar-item active " id="">
-                          <a href="table.html" class='sidebar-link'>
+                      <li class="sidebar-item active " id="navLogout">
+                          <a href="#" class='sidebar-link'>
                               <i class="bi bi-grid-fill"></i>
                               <span>Logout</span>
                           </a>
                       </li>
-                      <li class="sidebar-item active " id="">
-                          <a href="table.html" class='sidebar-link'>
+                      <li class="sidebar-item active " id="navRegister">
+                          <a href="#" class='sidebar-link'>
                               <i class="bi bi-grid-fill"></i>
-                              <span>Login</span>
+                              <span>Register</span>
                           </a>
                       </li>
                   </ul>
@@ -141,6 +147,37 @@
               </nav>
           </header>
 
+          <form id="editMovieForm">
+            <div class="eachAddMovieInput">
+                <label>Title</label>
+                <input type="text" id="editMovieTitle">
+            </div>
+            <div class="eachAddMovieInput">
+                <label>Synopsis</label>
+                <input type="text" id="editMovieSynopsis">
+            </div>
+            <div class="eachAddMovieInput">
+                <label>trailer Url</label>
+                <input type="text" id="editMovieTrailerUrl">
+            </div>
+            <div class="eachAddMovieInput">
+                <label>image Url</label>
+                <input type="text" id="editMovieImageUrl">
+            </div>
+            <div class="eachAddMovieInput">
+                <label>rating</label>
+                <input type="number" id="editMovieRating">
+            </div>
+            <div class="eachAddMovieInput">
+                <label>genre</label>
+                <select name="genreid" id="editgenreId">
+                    <option value="1">Aristo</option>
+                </select>
+            </div>
+            <div class="addMovieSubmit">
+                <button type="submit">Edit</button>
+            </div>
+        </form>
           <form id="addMovieForm">
             <div class="eachAddMovieInput">
                 <label>Title</label>
@@ -162,11 +199,33 @@
                 <label>rating</label>
                 <input type="number" id="MovieRating">
             </div>
+            <div class="eachAddMovieInput">
+                <label>genre</label>
+                <select name="genreid" id="genreId">
+                    <option value="1">Aristo</option>
+                </select>
+            </div>
             <div class="addMovieSubmit">
                 <button type="submit">Submit</button>
             </div>
         </form>
 
+          <form id="register-form">
+              <div class="login-page">
+                    <h2>REGISTER</h2>
+                    <div class="each-input">
+                        <label>Email</label>
+                        <input type="text" id="email-register">
+                    </div>
+                    <div class="each-input">
+                        <label>Password</label>
+                        <input type="text" id="password-register">
+                    </div>
+                    <div class="login-submit">
+                        <button type="submit">register</button>
+                    </div>
+                </div>
+          </form>
           <form id="login-form">
               <div id="login-page">
                   <div class="login-page">
@@ -207,18 +266,10 @@
                                         <th>trailerUrl</th>
                                         <th>imgUrl</th>
                                         <th>rating</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="isi-movie-list">
-                                    <!-- <tr>
-                                        <td>Dummy</td>
-                                        <td>dummy@dummies.com</td>
-                                        <td>076 4820 8838</td>
-                                        <td>Jakarta</td>
-                                        <td>
-                                            <span class="badge bg-success">Active</span>
-                                        </td>
-                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
