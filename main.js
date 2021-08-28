@@ -2,7 +2,9 @@ function showLoginPage(){
     $('#email-Login').val('');
     $('#password-Login').val('');
     $('#editMovieForm').hide();
+    $('#login-form-page').show();
     $('#login-page').show();
+
     // $('#sidebar').hide();
     $('.mb-3').hide();
     $('.page-heading').hide();
@@ -13,13 +15,15 @@ function showLoginPage(){
     $('#navLogout').hide();
     $('#navRegister').show();
     $('#navLogin').hide();
-
+    $('#navSignOut').hide();
 };
 
 function showRegister(){
     $('#navLogin').show();
     $('#editMovieForm').hide();
-    $('#login-page').hide();
+    $('#login-form-page').hide();
+    // $('#login-page').hide();
+    $('#navSignOut').hide();
     $('#sidebar').show();
     $('.mb-3').hide();
     $('.page-heading').hide();
@@ -32,7 +36,10 @@ function showRegister(){
 
 function showHome(){
     $('#navLogin').hide();
-    $('#login-page').hide();
+    $('#login-form-page').hide();
+    // $('#login-page').hide();
+
+    $('#page-heading').show();
     $('#sidebar').show();
     $('.mb-3').show();
     $('#editMovieForm').hide();
@@ -40,6 +47,7 @@ function showHome(){
     $('#addMovieForm').hide();
     $('#navLogout').show();
     $('#navHome').show();
+    $('#navSignOut').show();
     $('#navAddMovie').show();
     $('#navRegister').hide();
     $('#register-form').hide();
@@ -55,6 +63,7 @@ function showAddMovie(){
     $('.page-heading').hide();
     $('#addMovieForm').show();
     $('#navLogout').show();
+    $('#navSignOut').show();
     $('#navRegister').hide();
     $('#register-form').hide();
 }
@@ -115,7 +124,8 @@ function editMovie(id){
         $('#addMovieForm').hide();
         $('#register-form').hide();
         $('#navLogout').show();
-        $('#navRegister').show();
+        $('#navSignOut').show();
+        $('#navRegister').hide();
         $('#editMovieTitle').val(data.title)
         $('#editMovieSynopsis').val(data.synopsis)
         $('#editMovieTrailerUrl').val(data.trailerUrl)
@@ -150,6 +160,38 @@ function editMovie(id){
     })
 }
 
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+}
+
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/google-login',
+        data: {
+            idtoken: id_token
+        }
+    })
+    .done((data) => {
+        console.log(data);
+        showHome()
+        localStorage.setItem('token', data.access_token);
+        fentchMovies()
+    })
+    .fail((err) => {
+        console.log(err);
+    })
+    // var profile = googleUser.getBasicProfile();
+    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    // console.log('Name: ' + profile.getName());
+    // console.log('Image URL: ' + profile.getImageUrl());
+    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
+
 $(document).ready(function(){
     if(localStorage.token){
         showHome()
@@ -170,6 +212,7 @@ $(document).ready(function(){
         .done((data) => {
             showHome()
             localStorage.setItem('token', data.token);
+            fentchMovies()
             console.log(data);
         })
         .fail((err) => {
@@ -193,6 +236,7 @@ $(document).ready(function(){
         event.preventDefault()
         localStorage.removeItem('token')
         showLoginPage()
+        $('#login-form-page').show();
     })
 
     $('#navRegister').click(function(event){
@@ -223,6 +267,11 @@ $(document).ready(function(){
         })
     })
     
+    $('#navLogin').click(function(event){
+        event.preventDefault()
+        showLoginPage()
+    })
+
     $('#register-form').submit(function(event){
         event.preventDefault()
         let password = $('#password-register').val();

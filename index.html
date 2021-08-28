@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <meta name="google-signin-client_id" content="823931053888-00f9r5vhu83ve6euo2dhp31cv6chl8ik.apps.googleusercontent.com">
 
     <link rel="stylesheet" href="assets/vendors/simple-datatables/style.css">
 
@@ -65,6 +66,9 @@
                               <i class="bi bi-grid-fill"></i>
                               <span>Register</span>
                           </a>
+                      </li>
+                      <li class="sidebar-item active " id="navSignOut">
+                        <!-- <a href="#" onclick="signOut();">Sign out</a> -->
                       </li>
                   </ul>
               </div>
@@ -226,23 +230,26 @@
                     </div>
                 </div>
           </form>
-          <form id="login-form">
-              <div id="login-page">
-                  <div class="login-page">
-                      <div class="each-input">
-                          <label>Email</label>
-                          <input type="text" id="email-Login">
-                      </div>
-                      <div class="each-input">
-                          <label>Password</label>
-                          <input type="text" id="password-Login">
-                      </div>
-                      <div class="login-submit">
-                          <button type="submit">LOGIN</button>
+          <div id='login-form-page'>
+              <form id="login-form">
+                  <div id="login-page">
+                      <div class="login-page">
+                          <div class="each-input">
+                              <label>Email</label>
+                              <input type="text" id="email-Login">
+                          </div>
+                          <div class="each-input">
+                              <label>Password</label>
+                              <input type="password" id="password-Login">
+                          </div>
+                          <div class="login-submit">
+                              <button type="submit">LOGIN</button>
+                          </div>
                       </div>
                   </div>
-              </div>
-          </form>
+              </form>
+              <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          </div>
             <div class="page-heading">
                 <div class="page-title">
                     <div class="row">
@@ -280,6 +287,7 @@
 
         </div>
     </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
