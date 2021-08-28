@@ -165,6 +165,10 @@ function signOut() {
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
+    event.preventDefault()
+    localStorage.removeItem('token')
+    showLoginPage()
+    $('#login-form-page').show();
 }
 
 function onSignIn(googleUser) {
