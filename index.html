@@ -186,7 +186,9 @@
             </div>
         </form>
         
-          <form id="addMovieForm">
+          <form id="addMovieForm"
+          enctype="multipart/form-data"
+          onsubmit="submitEdit(event)">
             <div class="eachAddMovieInput">
                 <label>Title</label>
                 <input type="text" id="MovieTitle">
@@ -201,7 +203,7 @@
             </div>
             <div class="eachAddMovieInput">
                 <label>image Url</label>
-                <input type="text" id="MovieImageUrl">
+                <input type="file" id="MovieImageUrl">
             </div>
             <div class="eachAddMovieInput">
                 <label>rating</label>

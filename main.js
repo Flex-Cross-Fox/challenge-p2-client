@@ -257,23 +257,25 @@ function submitEdit(event){
     let rating = $('#editMovieRating').val()
     let genre = $('#editgenreId').val()
     let fileInput = $('#editMovieImageUrl')[0].files[0]
+    console.log(fileInput);
     let newData = new FormData()
     newData.append('title', title)
-    newData.append('Synopsis', Synopsis)
-    newData.append('trailer', trailer)
+    newData.append('synopsis', Synopsis)
+    newData.append('trailerUrl', trailer)
     newData.append('rating', rating)
-    newData.append('genre', genre)
+    newData.append('genreId', genre)
     newData.append('fileInput', fileInput)
     $.ajax({
     method: 'PUT',
     url: 'http://localhost:3000/movies/' + idMovie,
-    data: { newData },
+    data: newData ,
     headers: {token: localStorage.getItem('token') },
     contentType: false,
     processData: false
     })
     .done((data) => {
         console.log(data);
+        showHome()
     })
     .fail((err) => {
         console.log(err);
@@ -338,14 +340,23 @@ $(document).ready(function(){
         let title = $('#MovieTitle').val();
         let synopsis = $('#MovieSynopsis').val();
         let trailerUrl = $('#MovieTrailerUrl').val();
-        let imgUrl = $('#MovieImageUrl').val();
+        let imgUrl = $('#MovieImageUrl')[0].files[0]
         let rating = $('#MovieRating').val();
         let genreId = $('#genreId').val();
+        let newData = new FormData()
+        newData.append('title', title)
+        newData.append('synopsis', synopsis)
+        newData.append('trailerUrl', trailerUrl)
+        newData.append('rating', rating)
+        newData.append('genreId', genreId)
+        newData.append('fileInput', imgUrl)
         $.ajax({
             method: 'POST',
             url: 'http://localhost:3000/movies',
-            data: { title, synopsis, trailerUrl, imgUrl, rating, genreId },
-            headers: {token: localStorage.getItem('token') }   
+            data: newData,
+            headers: {token: localStorage.getItem('token') },
+            contentType: false,
+            processData: false
         })
         .done((data) => {
             console.log(data);
