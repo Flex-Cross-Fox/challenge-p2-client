@@ -64,8 +64,45 @@ function showAddMovie(){
     $('#addMovieForm').show();
     $('#navLogout').show();
     $('#navSignOut').show();
+    fentchGenre()
     $('#navRegister').hide();
     $('#register-form').hide();
+}
+
+function fentchEditGenre(){
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/genres'
+    })
+    .done((data) => {
+        $('#editgenreId').empty()
+        for(let a = 0; a < data.length; a++){
+            $('#editgenreId').append(`
+            <option value="${data[a].id}">${data[a].name}</option>
+            `)
+        }
+    })
+    .fail((err) => {
+        console.log(err);
+    })
+}
+
+function fentchGenre(){
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/genres'
+    })
+    .done((data) => {
+        $('#genreId').empty()
+        for(let a = 0; a < data.length; a++){
+            $('#genreId').append(`
+            <option value="${data[a].id}">${data[a].name}</option>
+            `)
+        }
+    })
+    .fail((err) => {
+        console.log(err);
+    })
 }
 
 function fentchMovies(){
@@ -126,34 +163,49 @@ function editMovie(id){
         $('#navLogout').show();
         $('#navSignOut').show();
         $('#navRegister').hide();
+        $('#idUntukSubmitEdit').val(id)
         $('#editMovieTitle').val(data.title)
         $('#editMovieSynopsis').val(data.synopsis)
         $('#editMovieTrailerUrl').val(data.trailerUrl)
-        $('#editMovieImageUrl').val(data.imgUrl)
+        // $('#editMovieImageUrl').val(data.imgUrl)
         $('#editMovieRating').val(data.rating)
         $('#editgenreId').val(data.genreId)
-        $('#editMovieForm').submit(function(event){
-            event.preventDefault()
-            let title = $('#editMovieTitle').val()
-            let synopsis = $('#editMovieSynopsis').val()
-            let trailerUrl = $('#editMovieTrailerUrl').val()
-            let imgUrl = $('#editMovieImageUrl').val()
-            let rating = $('#editMovieRating').val()
-            let genreId = $('#editgenreId').val()
-            $.ajax({
-                method: 'PUT',
-                url: 'http://localhost:3000/movies/' + id,
-                data: {title, synopsis, trailerUrl, imgUrl, rating, genreId},
-                headers: {token: localStorage.getItem('token') }   
-            })
-            .done((data) => {
-                console.log(data);
-                showHome()
-            })
-            .fail((err) => {
-                console.log(err);
-            })
-        })
+
+        fentchEditGenre()
+        // $('#editMovieForm').submit(function(event){
+        //     event.preventDefault()
+        //     let title = $('#editMovieTitle').val()
+        //     let synopsis = $('#editMovieSynopsis').val()
+        //     let trailerUrl = $('#editMovieTrailerUrl').val()
+        //     let imgUrl = $('#editMovieImageUrl').val()
+        //     let rating = $('#editMovieRating').val()
+        //     let genreId = $('#editgenreId').val()
+            
+        //     let fileInput = $('#editMovieImageUrl')[0].files[0]
+        //     let newData = new FormData()
+        //     newData.append('title', title)
+        //     newData.append('Synopsis', synopsis)
+        //     newData.append('trailer', trailerUrl)
+        //     newData.append('rating', rating)
+        //     newData.append('genre', genreId)
+        //     console.log(imgUrl);
+        //     console.log(fileInput);
+        //     $.ajax({
+        //         method: 'PUT',
+        //         url: 'http://localhost:3000/movies/' + id,
+        //         data: newData ,
+        //         headers: {token: localStorage.getItem('token') } ,
+        //         contentType: false,
+        //         processData: false  
+        //     })
+        //     .done((data) => {
+        //         console.log(data);
+        //         showHome()
+        //     })
+        //     .fail((err) => {
+        //         console.log(err);
+        //     })
+        // })
     })
     .fail((err) => {
         console.log(err);
@@ -196,6 +248,38 @@ function onSignIn(googleUser) {
     // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   }
 
+function submitEdit(event){
+    event.preventDefault()
+    let idMovie = $('#idUntukSubmitEdit').val()
+    let title = $('#editMovieTitle').val()
+    let Synopsis = $('#editMovieSynopsis').val()
+    let trailer = $('#editMovieTrailerUrl').val()
+    let rating = $('#editMovieRating').val()
+    let genre = $('#editgenreId').val()
+    let fileInput = $('#editMovieImageUrl')[0].files[0]
+    let newData = new FormData()
+    newData.append('title', title)
+    newData.append('Synopsis', Synopsis)
+    newData.append('trailer', trailer)
+    newData.append('rating', rating)
+    newData.append('genre', genre)
+    newData.append('fileInput', fileInput)
+    $.ajax({
+    method: 'PUT',
+    url: 'http://localhost:3000/movies/' + idMovie,
+    data: { newData },
+    headers: {token: localStorage.getItem('token') },
+    contentType: false,
+    processData: false
+    })
+    .done((data) => {
+        console.log(data);
+    })
+    .fail((err) => {
+        console.log(err);
+    })
+}
+
 $(document).ready(function(){
     if(localStorage.token){
         showHome()
@@ -233,7 +317,7 @@ $(document).ready(function(){
     $('#navAddMovie').click(function(event){
         event.preventDefault()
         showAddMovie()
-
+        
     })
 
     $('#navLogout').click(function(event){
@@ -249,6 +333,7 @@ $(document).ready(function(){
     })
 
     $('#addMovieForm').submit(function(event){
+        //tambah add file
         event.preventDefault()
         let title = $('#MovieTitle').val();
         let synopsis = $('#MovieSynopsis').val();

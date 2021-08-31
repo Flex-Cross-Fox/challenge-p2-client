@@ -151,7 +151,11 @@
               </nav>
           </header>
 
-          <form id="editMovieForm">
+          <form 
+          enctype="multipart/form-data"
+          onsubmit="submitEdit(event)"
+          id="editMovieForm">
+          <input type="text" name="idUntukSubmitEdit" id="idUntukSubmitEdit" hidden>
             <div class="eachAddMovieInput">
                 <label>Title</label>
                 <input type="text" id="editMovieTitle">
@@ -166,7 +170,7 @@
             </div>
             <div class="eachAddMovieInput">
                 <label>image Url</label>
-                <input type="text" id="editMovieImageUrl">
+                <input type="file" id="editMovieImageUrl">
             </div>
             <div class="eachAddMovieInput">
                 <label>rating</label>
@@ -175,13 +179,13 @@
             <div class="eachAddMovieInput">
                 <label>genre</label>
                 <select name="genreid" id="editgenreId">
-                    <option value="1">Aristo</option>
                 </select>
             </div>
             <div class="addMovieSubmit">
                 <button type="submit">Edit</button>
             </div>
         </form>
+        
           <form id="addMovieForm">
             <div class="eachAddMovieInput">
                 <label>Title</label>
@@ -206,7 +210,6 @@
             <div class="eachAddMovieInput">
                 <label>genre</label>
                 <select name="genreid" id="genreId">
-                    <option value="1">Aristo</option>
                 </select>
             </div>
             <div class="addMovieSubmit">
