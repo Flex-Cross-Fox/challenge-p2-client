@@ -122,7 +122,7 @@ function fentchMovies(){
     <td>${data[a].trailerUrl}</td>
     <td><img src="${data[a].imgUrl}" alt="${data[a].title}" border=3 height=50 width=50></img></td>
     <td>${data[a].rating}</td>
-    <td><a href="#" onclick="deleteMovie(${data[a].id})">Delete</a> <a href="#" onclick="editMovie(${data[a].id})">Edit</a></td>
+    <td><a href="#" onclick="deleteMovie(${data[a].id})">Delete</a> <a href="#" onclick="editMovie(${data[a].id})">Edit</a> <a href="#" onclick="inactiveMovie(${data[a].id})">inactive</a></td>
 </tr>`
             )
         }
@@ -132,7 +132,22 @@ function fentchMovies(){
     })
 }
 
+function inactiveMovie(id){
+    $.ajax({
+        method: 'PATCH',
+        url: 'http://localhost:3000/movies/' + id,  
+        headers: {token: localStorage.getItem('token') }
+    })
+    .done(() => {
+        showHome()
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+}
+
 function deleteMovie(id){
+    console.log('masuk ke function delete' + id);
     $.ajax({
         method: 'DELETE',
         url: 'http://localhost:3000/movies/' + id,  
@@ -248,6 +263,40 @@ function onSignIn(googleUser) {
     // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   }
 
+function addMovieForm(event){
+    event.preventDefault()
+    let title = $('#MovieTitle').val();
+    let synopsis = $('#MovieSynopsis').val();
+    let trailerUrl = $('#MovieTrailerUrl').val();
+    let imgUrl = $('#MovieImageUrl')[0].files[0]
+    let rating = $('#MovieRating').val();
+    let genreId = $('#genreId').val();
+    let status = $('#statusAddMovie').val();
+    let newData = new FormData()
+    newData.append('status', status)
+    newData.append('title', title)
+    newData.append('synopsis', synopsis)
+    newData.append('trailerUrl', trailerUrl)
+    newData.append('rating', rating)
+    newData.append('genreId', genreId)
+    newData.append('fileInput', imgUrl)
+    console.log('sudah masuk ke localstorage');
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/movies',
+        data: newData,
+        headers: {token: localStorage.getItem('token') },
+        contentType: false,
+        processData: false
+    })
+    .done((data) => {
+        showHome()
+    })
+    .fail((err) => {
+        console.log(err);
+    })
+}
+
 function submitEdit(event){
     event.preventDefault()
     let idMovie = $('#idUntukSubmitEdit').val()
@@ -256,7 +305,9 @@ function submitEdit(event){
     let trailer = $('#editMovieTrailerUrl').val()
     let rating = $('#editMovieRating').val()
     let genre = $('#editgenreId').val()
+    console.log($('#editMovieImageUrl')[0].files);
     let fileInput = $('#editMovieImageUrl')[0].files[0]
+    console.log('masuk');
     console.log(fileInput);
     let newData = new FormData()
     newData.append('title', title)
@@ -265,6 +316,8 @@ function submitEdit(event){
     newData.append('rating', rating)
     newData.append('genreId', genre)
     newData.append('fileInput', fileInput)
+    console.log(newData);
+    
     $.ajax({
     method: 'PUT',
     url: 'http://localhost:3000/movies/' + idMovie,
@@ -334,38 +387,40 @@ $(document).ready(function(){
         showRegister()
     })
 
-    $('#addMovieForm').submit(function(event){
-        //tambah add file
-        event.preventDefault()
-        let title = $('#MovieTitle').val();
-        let synopsis = $('#MovieSynopsis').val();
-        let trailerUrl = $('#MovieTrailerUrl').val();
-        let imgUrl = $('#MovieImageUrl')[0].files[0]
-        let rating = $('#MovieRating').val();
-        let genreId = $('#genreId').val();
-        let newData = new FormData()
-        newData.append('title', title)
-        newData.append('synopsis', synopsis)
-        newData.append('trailerUrl', trailerUrl)
-        newData.append('rating', rating)
-        newData.append('genreId', genreId)
-        newData.append('fileInput', imgUrl)
-        $.ajax({
-            method: 'POST',
-            url: 'http://localhost:3000/movies',
-            data: newData,
-            headers: {token: localStorage.getItem('token') },
-            contentType: false,
-            processData: false
-        })
-        .done((data) => {
-            console.log(data);
-            showHome()
-        })
-        .fail((err) => {
-            console.log(err);
-        })
-    })
+    // $('#addMovieForm').submit(function(event){
+    //     //tambah add file
+    //     console.log('di add movie');
+    //     event.preventDefault()
+    //     let title = $('#MovieTitle').val();
+    //     let synopsis = $('#MovieSynopsis').val();
+    //     let trailerUrl = $('#MovieTrailerUrl').val();
+    //     let imgUrl = $('#MovieImageUrl')[0].files[0]
+    //     let rating = $('#MovieRating').val();
+    //     let genreId = $('#genreId').val();
+    //     let newData = new FormData()
+    //     newData.append('title', title)
+    //     newData.append('synopsis', synopsis)
+    //     newData.append('trailerUrl', trailerUrl)
+    //     newData.append('rating', rating)
+    //     newData.append('genreId', genreId)
+    //     newData.append('fileInput', imgUrl)
+    //     console.log(newData);
+    //     $.ajax({
+    //         method: 'POST',
+    //         url: 'http://localhost:3000/movies',
+    //         data: newData,
+    //         headers: {token: localStorage.getItem('token') },
+    //         contentType: false,
+    //         processData: false
+    //     })
+    //     .done((data) => {
+    //         console.log(data);
+    //         showHome()
+    //     })
+    //     .fail((err) => {
+    //         console.log(err);
+    //     })
+    // })
     
     $('#navLogin').click(function(event){
         event.preventDefault()

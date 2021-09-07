@@ -177,6 +177,14 @@
                 <input type="number" id="editMovieRating">
             </div>
             <div class="eachAddMovieInput">
+                <label>Status</label>
+                <select name="status" id="statusEditMovie">
+                    <option value="active">active</option>
+                    <option value="inactive">inactive</option>
+                    <option value="archived">archived</option>
+                </select>
+            </div>
+            <div class="eachAddMovieInput">
                 <label>genre</label>
                 <select name="genreid" id="editgenreId">
                 </select>
@@ -188,7 +196,8 @@
         
           <form id="addMovieForm"
           enctype="multipart/form-data"
-          onsubmit="submitEdit(event)">
+          onsubmit="addMovieForm(event)"
+          >
             <div class="eachAddMovieInput">
                 <label>Title</label>
                 <input type="text" id="MovieTitle">
@@ -210,6 +219,14 @@
                 <input type="number" id="MovieRating">
             </div>
             <div class="eachAddMovieInput">
+                <label>Status</label>
+                <select name="status" id="statusAddMovie">
+                    <option value="active">active</option>
+                    <option value="inactive">inactive</option>
+                    <option value="archived">archived</option>
+                </select>
+            </div>
+            <div class="eachAddMovieInput">
                 <label>genre</label>
                 <select name="genreid" id="genreId">
                 </select>
@@ -228,7 +245,7 @@
                     </div>
                     <div class="each-input">
                         <label>Password</label>
-                        <input type="text" id="password-register">
+                        <input type="password" id="password-register">
                     </div>
                     <div class="login-submit">
                         <button type="submit">register</button>
