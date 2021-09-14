@@ -1,0 +1,46 @@
+/* login page */
+#login-page {
+    margin: auto;
+    width: 50%;
+    border: solid black 3px;
+}
+
+#login-page label{
+    margin: auto;
+}
+
+.login-page {
+    background-color: bisque;
+    margin: auto;
+    padding-top: 5%;
+    font-size: xx-large;
+}
+
+.each-input {
+    margin: auto;
+    width: 50%;
+}
+
+.login-submit {
+    position: relative;
+    left: 50%;
+}
+
+.login-submit button{
+    font-size: x-large;
+}
+
+/* add movie form */
+#addMovieForm {
+    background-color: bisque;
+    text-align: center;
+    font-size: x-large;
+}
+
+.eachAddMovieInput{
+    margin: 5px;    
+}
+
+.addMovieSubmit button{
+    font-size: xx-large;
+}
